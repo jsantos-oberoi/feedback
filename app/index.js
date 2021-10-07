@@ -26,29 +26,49 @@ server.get("/", (request, response) => {
 });
 
 server.post("/rubric/update", (request, response) => {
-    console.log("Post request received.");
-    response.send(request.body);
+  const rubric = new Rubric(request.body.rubric);
+  if (rubric._id) {
+    Rubric.findByIdAndUpdate(rubric._id, rubric)
+      .then((result) => {
+        // response.send("Rubric updated");
+        response.redirect(`/rubric/update/${rubric._id}`);
+      })
+      .catch((error) => {
+        response.send("Error updating rubric.");
+      })
+  } else {
+    rubric.save()
+      .then((result) => {
+        // response.send("Rubric added");
+        response.redirect(`/rubric/update/${rubric._id}`);
+      })
+      .catch((error) => {
+        response.send("Error adding new rubric.");
+      });
+  }
 });
 
 server.get("/rubric/update/:rubricID", (request, response) => {
-    Rubric.findById(request.params.rubricID)
-      .then((response) => {
-        const rubric = response;
-        response.render("rubric-form", {rubric: rubric});
-      })
-      .catch((error) => {
-        // Define rubric defaults:
-        const rubric = {
-          label: "new rubric",
-          criteria: [
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion A", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion B", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion C", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion D", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] }
-          ]
-        }
-        response.render("rubric-form", {rubric: rubric});
-      });
+  Rubric.findById(request.params.rubricID)
+    .then((result) => {
+      //console.log(response);
+      const rubric = result;
+      response.render("rubric-form", {rubric: rubric});
+    })
+    .catch((error) => {
+      console.log(error);
+      // Define rubric defaults:
+      const rubric = {
+        label: "new rubric",
+        criteria: [
+          { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion A", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+          { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion B", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+          { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion C", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+          { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion D", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] }
+        ]
+      }
+      response.render("rubric-form", {rubric: rubric});
+    });
 });
 
 server.listen(port, () => {

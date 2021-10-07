@@ -10,9 +10,9 @@
 <body>
     <div class="form-wrapper">
         <form method="POST" action="http://localhost:3000/rubric/update">
-            <input type="hidden" value="<%= rubric.__id %>" name="rubric-id">
+            <input type="hidden" value="<%= rubric._id %>" name="rubric[_id]">
             <label for="rubric-label">rubric label</label>
-            <textarea name="rubric[label]" id="rubric-label">new rubric</textarea>
+            <textarea name="rubric[label]" id="rubric-label"><%= rubric.label %></textarea>
 
             <ol class="tab-list" id="criteria-tab-list">
                 <li class="active">A</li>
@@ -41,7 +41,10 @@
                     <tbody>
                         <% criterion.bandLabels.forEach((label, j) => { %>
                         <tr>
-                            <td class="band-label"><%= label %></td>
+                            <td class="band-label">
+                                <%= label %>
+                                <input type="hidden" name="rubric[criteria][<%= i %>][bandLabels][<%= j %>]" value="<%= label %>">
+                            </td>
                             <td class="band-strands">
                                 <ol class="strand-list">
                                     <% criterion.strands.forEach((strand, k) => { %>
