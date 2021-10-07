@@ -41,10 +41,10 @@ server.get("/rubric/update/:rubricID", (request, response) => {
         const rubric = {
           label: "new rubric",
           criteria: [
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion A", strands: [{ objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion B", strands: [{ objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion C", strands: [{ objective: "", bands: ["", "", "", ""] }] },
-            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion D", strands: [{ objective: "", bands: ["", "", "", ""] }] }
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion A", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion B", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion C", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion D", strands: [{ objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }, { objective: "", bands: ["", "", "", ""] }] }
           ]
         }
         response.render("rubric-form", {rubric: rubric});
