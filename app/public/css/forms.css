@@ -1,0 +1,104 @@
+body {
+    font-family: sans-serif;
+}
+
+.form-wrapper {
+    border: 1px solid darkcyan;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px darkcyan;
+    margin: 20px auto;
+    padding: 20px;
+    width: 800px;
+}
+
+.form-wrapper button {
+    background: orange;
+    border-radius: 24px;
+    display: block;
+    font-weight: bold;
+    margin: 20px auto;
+    padding: 4px 0px;
+    width: 12ch;
+}
+
+.form-wrapper label {
+    display: block;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.form-wrapper textarea {
+    font-style: italic;
+    resize: none;
+    width: 100%;
+}
+
+.objective-list, .strand-list {
+    list-style: lower-roman;
+    padding: 0px 0px 0px 20px;
+}
+
+.objective-list *, .strand-list * {
+    vertical-align: top;
+}
+
+.objective-list > li, .strand-list > li {
+    margin: 10px 0px;
+}
+
+.band-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.band-table th {
+    background: #555;
+    border: 1px solid black;
+    border-collapse: collapse;
+    color: white;
+    font-size: 0.75em;
+}
+
+.band-table td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.band-label {
+    font-weight: bold;
+    text-align: center;
+}
+
+.band-strands {
+    padding: 20px 10px;
+}
+
+.tab-list {
+    list-style: none;
+    margin: 10px 0px;
+    padding: 0px;
+}
+
+.tab-list > li {
+    border: 1px solid black;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    margin: 20px 0px;
+    padding: 10px 0px;
+    width: 12ch;
+}
+
+.tab-list > li:hover:not(.active) {
+    background: lightcyan;
+}
+
+.active {
+    background: darkcyan;
+    color: white;
+}
+
+.disabled {
+    display: none;
+}

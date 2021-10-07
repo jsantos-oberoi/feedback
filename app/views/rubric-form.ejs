@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubric Form</title>
+    <script src="/js/rubric-form.js" defer></script>
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+    <div class="form-wrapper">
+        <form method="POST" action="http://localhost:3000/rubric/update">
+            <input type="hidden" value="<%= rubric.__id %>" name="rubric-id">
+            <label for="rubric-label">rubric label</label>
+            <textarea name="rubric[label]" id="rubric-label">new rubric</textarea>
+
+            <ol class="tab-list" id="criteria-tab-list">
+                <li class="active">A</li>
+                <li>B</li>
+                <li>C</li>
+                <li>D</li>
+            </ol>
+
+            <% rubric.criteria.forEach((criterion, i) => { %>
+            <div class="criterion-wrapper <%= i > 0 ? 'disabled' : '' %>">
+                <label for="criterion-<%= i %>-label">criterion label</label>
+                <textarea name="rubric[criteria][<%= i %>][label]"><%= criterion.label %></textarea>
+                <ol class="objective-list">
+                    <% criterion.strands.forEach((strand, j) => { %>
+                        <li>
+                            <textarea name="rubric[criteria][<%= i %>][strands][<%= j %>][objective]"><%= strand.objective %></textarea>
+                        </li>
+                    <% }); %>
+                </ol>
+
+                <table class="band-table">
+                    <thead>
+                        <th>Level</th>
+                        <th>Descriptor</th>
+                    </thead>
+                    <tbody>
+                        <% criterion.bandLabels.forEach((label, j) => { %>
+                        <tr>
+                            <td class="band-label"><%= label %></td>
+                            <td class="band-strands">
+                                <ol class="strand-list">
+                                    <% criterion.strands.forEach((strand, k) => { %>
+                                    <li>
+                                        <textarea name="rubric[criteria][<%= i %>][strands][<%= k %>][bands][<%= j %>]"><%= strand.bands[j] %></textarea>
+                                    </li>
+                                    <% }) %>
+                                </ol>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            <% }); %>
+        </form>
+    </div>
+</body>
+</html>
