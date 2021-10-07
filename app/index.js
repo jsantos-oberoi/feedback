@@ -28,187 +28,27 @@ server.get("/", (request, response) => {
 server.post("/rubric/update", (request, response) => {
     console.log("Post request received.");
     response.send(request.body);
-
-    const rubric = new Rubric(request.body.rubric);
 });
 
-server.get("/rubric", (request, response) => {
-    const rubric = {
-          "label": "new rubric",
-          "criteria": [
-            {
-              "bandLabels": ["1 - 2", "3 - 4", "5 - 6", "7 - 8"],
-              "label": "criteria a",
-              "strands": [
-                {
-                  "objective": "a-i",
-                  "bands": [
-                    "a-i-1",
-                    "a-i-2",
-                    "a-i-3",
-                    "a-i-4"
-                  ]
-                },
-                {
-                  "objective": "a-ii",
-                  "bands": [
-                    "a-ii-1",
-                    "a-ii-2",
-                    "a-ii-3",
-                    "a-ii-4"
-                  ]
-                },
-                {
-                  "objective": "a-iii",
-                  "bands": [
-                    "a-iii-1",
-                    "a-iii-2",
-                    "a-iii-3",
-                    "a-iii-4"
-                  ]
-                },
-                {
-                  "objective": [
-                    "a-iv",
-                    ""
-                  ],
-                  "bands": [
-                    "a-iv-1",
-                    "a-iv-2",
-                    "a-iv-3",
-                    "a-iv-4"
-                  ]
-                }
-              ]
-            },
-            {
-              "bandLabels": ["1 - 2", "3 - 4", "5 - 6", "7 - 8"],
-              "label": "criteria b",
-              "strands": [
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                }
-              ]
-            },
-            {
-              "bandLabels": ["1 - 2", "3 - 4", "5 - 6", "7 - 8"],
-              "label": "criteria c",
-              "strands": [
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                }
-              ]
-            },
-            {
-              "bandLabels": ["1 - 2", "3 - 4", "5 - 6", "7 - 8"],
-              "label": "criteria d",
-              "strands": [
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                },
-                {
-                  "objective": "",
-                  "bands": [
-                    "",
-                    "",
-                    "",
-                    ""
-                  ]
-                }
-              ]
-            }
+server.get("/rubric/update/:rubricID", (request, response) => {
+    Rubric.findById(request.params.rubricID)
+      .then((response) => {
+        const rubric = response;
+        response.render("rubric-form", {rubric: rubric});
+      })
+      .catch((error) => {
+        // Define rubric defaults:
+        const rubric = {
+          label: "new rubric",
+          criteria: [
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion A", strands: [{ objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion B", strands: [{ objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion C", strands: [{ objective: "", bands: ["", "", "", ""] }] },
+            { bandLabels: ["1 - 2", "3 - 4", "5 - 6", "7 - 8"], label: "Criterion D", strands: [{ objective: "", bands: ["", "", "", ""] }] }
           ]
-        };
-    response.render("rubric-form", {rubric: rubric});
+        }
+        response.render("rubric-form", {rubric: rubric});
+      });
 });
 
 server.listen(port, () => {
