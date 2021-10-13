@@ -48,15 +48,14 @@ server.post("/rubric/update", (request, response) => {
   }
 });
 
-server.get("/rubric/update/:rubricID", (request, response) => {
+server.get("/rubric/update/:rubricID?", (request, response) => {
   Rubric.findById(request.params.rubricID)
     .then((result) => {
-      //console.log(response);
-      const rubric = result;
-      response.render("rubric-form", {rubric: rubric});
+      // mongoose does not throw an error if rubricID is null, so we have to
+      if (!result) throw(null); 
+      response.render("rubric-form", {rubric: result});
     })
     .catch((error) => {
-      console.log(error);
       // Define rubric defaults:
       const rubric = {
         label: "new rubric",
